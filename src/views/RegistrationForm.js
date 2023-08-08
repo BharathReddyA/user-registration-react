@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 
 const RegistrationForm = () => {
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -10,6 +11,7 @@ const RegistrationForm = () => {
     street: "",
     city: "",
     state: "",
+    zipcode: "", // Make sure the zipcode field is defined
     gender: "Male",
     email: "",
     password: "",
@@ -45,7 +47,7 @@ const RegistrationForm = () => {
       console.error("Error:", error);
     }
   };
-
+  
   const isGenderDisabled =
     formData.state === "Male" ||
     formData.state === "Female" ||
