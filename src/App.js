@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+/* eslint-disable react/jsx-no-undef */
 import './App.css';
+import React from 'react';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import RegistrationForm from './views/RegistrationForm';
+// import Form from './views/Form';
+// import Login from './views/login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/RegistrationForm" element={<RegistrationForm />} />
+    //     {/* <Route path="/login" element={<Login />} /> */}
+    //     {/* Define other routes as needed */}
+    //   </Routes>
+    // </BrowserRouter>
+    <div className='App'>
+      <RegistrationForm/>
     </div>
   );
 }
