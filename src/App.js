@@ -1,25 +1,16 @@
-/* eslint-disable react/jsx-no-undef */
-import './App.css';
-import React from 'react';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RegistrationForm from "./views/RegistrationForm";
+import Login from "./views/login"; // Your Login form component
 
-import RegistrationForm from './views/RegistrationForm';
-// import Form from './views/Form';
-// import Login from './views/login';
-
-function App() {
+const App = () => {
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/RegistrationForm" element={<RegistrationForm />} />
-    //     {/* <Route path="/login" element={<Login />} /> */}
-    //     {/* Define other routes as needed */}
-    //   </Routes>
-    // </BrowserRouter>
-    <div className='App'>
-      <RegistrationForm/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RegistrationForm />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

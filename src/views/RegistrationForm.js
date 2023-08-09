@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
+import countryList from "country-list";
+// import countryCallingCodes from "country-codes-list"; // Importing the correct library
+// import {
+//     Country,
+//     getPlanetaryDials,
+//     getCountryDialCode,
+//     getCountryFlag,
+//     getCountryName
+// } from "planetary-dials";
+
+const countries = countryList.getData();
+// const countryCodes = new countryCallingCodes(); // Creating an instance of the library
+// const countryCodes = getCountryDialCode();
 
 const RegistrationForm = () => {
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,7 +25,9 @@ const RegistrationForm = () => {
     street: "",
     city: "",
     state: "",
-    zipcode: "", // Make sure the zipcode field is defined
+    country: "",
+    countryCode: "",
+    zipcode: "",
     gender: "Male",
     email: "",
     password: "",
@@ -28,7 +44,7 @@ const RegistrationForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form data submitted:", formData);
-
+  
     try {
       const response = await fetch("http://localhost:3001/registerUser", {
         method: "POST",
@@ -37,9 +53,14 @@ const RegistrationForm = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         console.log("Registration successful!");
+        alert("Registration successful!");
+        navigate.push("/login");
+      } else if (response.status === 400) {
+        const data = await response.json();
+        alert(data.error);
       } else {
         console.error("Registration failed:", response.statusText);
       }
@@ -48,10 +69,11 @@ const RegistrationForm = () => {
     }
   };
   
+
   const isGenderDisabled =
     formData.state === "Male" ||
     formData.state === "Female" ||
-    formData.state === "Other"; // Adjust the condition
+    formData.state === "Other";
 
   return (
     <div className="registration-section mb-5">
@@ -100,21 +122,6 @@ const RegistrationForm = () => {
                       </div>
                     </div>
                     <div className="my-4 form-group row">
-                      <label className="col-sm-4 col-form-label">
-                        Mobile Number:
-                      </label>
-                      <div className="col-sm-6">
-                        <input
-                          type="text"
-                          name="mobileNumber"
-                          value={formData.mobileNumber}
-                          onChange={handleChange}
-                          className="form-control text-feild-decorator"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="my-4 form-group row">
                       <label className="col-sm-4 col-form-label">Street:</label>
                       <div className="col-sm-6">
                         <input
@@ -151,6 +158,27 @@ const RegistrationForm = () => {
                           className="form-control text-feild-decorator"
                           required
                         />
+                      </div>
+                    </div>
+                    <div className="my-4 form-group row">
+                      <label className="col-sm-4 col-form-label">
+                        Country:
+                      </label>
+                      <div className="col-sm-6">
+                        <select
+                          name="country"
+                          value={formData.country}
+                          onChange={handleChange}
+                          className="form-control text-feild-decorator"
+                          required
+                        >
+                          <option value="selectCountry">Select Country</option>
+                          {countries.map((country) => (
+                            <option key={country.code} value={country.name}>
+                              {country.name}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                     <div className="my-4 form-group row">
@@ -204,6 +232,65 @@ const RegistrationForm = () => {
                         />{" "}
                       </div>
                     </div>
+                    <div className="my-4 form-group row">
+                      <label className="col-sm-4 col-form-label">
+                        Mobile Number:
+                      </label>
+                      {/* <div className="col-sm-2">
+                        <select
+                          name="countryCode"
+                          value={formData.countryCode}
+                          onChange={handleCountryChange}
+                          className="form-control text-feild-decorator"
+                          required
+                        >
+                          <option value="selectCountryCode">Select Country Code</option>
+                          {countryList.getData().map((country) => (
+                            <option key={country.code} value={country.name}>
+                              {
+                                countryData.callingCodes(country.name)
+                                  ?.callingCountries[0]
+                              }{" "}
+                              ({country.name})
+                            </option>
+                          ))}
+                        </select>
+                        {countryList.getData().forEach((country) => {
+                          console.log(country.code);
+                        })}
+                      </div> */}
+                      <div className="col-sm-2">
+                        <select
+                          name="countryCode"
+                          value={formData.countryCode}
+                          onChange={handleChange}
+                          className="form-control text-feild-decorator"
+                          required
+                        >
+                          <option value="selectCountryCode">
+                            Select Country Code
+                          </option>
+                          {countries.map((countryCode) => (
+                            <option
+                              key={countryCode.name}
+                              value={countryCode.code}
+                            >
+                              {countryCode.code}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-sm-4">
+                        <input
+                          type="text"
+                          name="mobileNumber"
+                          value={formData.mobileNumber}
+                          onChange={handleChange}
+                          className="form-control text-feild-decorator"
+                          required
+                        />
+                      </div>
+                    </div>
                     <div className="form-group row my-4">
                       <label className="col-sm-4 col-form-label">Email:</label>
                       <div className="col-sm-6">
@@ -234,7 +321,10 @@ const RegistrationForm = () => {
                     </div>
                     <button type="submit" className="btn btn-primary my-4 mt-3">
                       Register
-                      <script>console.log("Register done");</script>
+                      <script type="text/javascript">
+                        {" "}
+                        console.log("Register done");{" "}
+                      </script>
                     </button>
                   </form>
                 </div>

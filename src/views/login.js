@@ -18,8 +18,6 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here, you can perform further actions like sending the data to a server
-    // for login, validation, etc.
     console.log("Form data submitted:", formData);
   };
 
@@ -55,7 +53,7 @@ const Login = () => {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary mb-3">
-                  Login {/* Change this label from "Register" to "Login" */}
+                  Login 
                 </button>
               </form>
             </div>
